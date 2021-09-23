@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/navigation_teamList"
+    android:id="@+id/mobile_navigation">
+
+    <fragment
+        android:id="@+id/navigation_teamList"
+        android:name="com.sol.soccerleague.ui.teamlist.TeamListFragment"
+        android:label="@string/tittle_teamList"
+        tools:layout="@layout/fragment_teamlist" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_fixture"
+        android:name="com.sol.soccerleague.ui.fixture.FixtureFragment"
+        android:label="@string/tittle_fixture"
+        tools:layout="@layout/fragment_fixture" >
+    </fragment>
+
+</navigation>

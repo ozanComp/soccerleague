@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Soccer League</string>
+    <string name="tittle_teamList">Team List</string>
+    <string name="tittle_fixture">Fixture </string>
+</resources>
