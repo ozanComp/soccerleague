@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="team"
+            type="com.sol.soccerleague.model.Team" />
+    </data>
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="5dp"
+        app:cardPreventCornerOverlap="true"
+        app:contentPadding="10dp"
+        app:cardUseCompatPadding="true">
+        <TextView
+            android:id="@+id/txtTeamName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@{team.shortName}"
+            android:textColor="#656464" />
+    </com.google.android.material.card.MaterialCardView>
+</layout>

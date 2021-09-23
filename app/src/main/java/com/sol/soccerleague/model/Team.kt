@@ -5,8 +5,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Team (
-    var id: Int? = 0,
-    var name: String? = null,
-    var shortName: String? = null,
-    var tla: String? = null,
+    var id: Int,
+    var name: String,
+    var shortName: String,
+    var tla: String,
 ): Parcelable

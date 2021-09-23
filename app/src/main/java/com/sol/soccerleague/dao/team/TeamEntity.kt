@@ -16,5 +16,8 @@ data class TeamEntity(
     val name : String,
 
     @ColumnInfo(name = "shortName")
-    val shortName : String
+    val shortName : String,
+
+    @ColumnInfo(name = "tla")
+    val tla : String
 ): Parcelable

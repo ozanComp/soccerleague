@@ -2,4 +2,6 @@
     <string name="app_name">Soccer League</string>
     <string name="tittle_teamList">Team List</string>
     <string name="tittle_fixture">Fixture </string>
+    <string name="draw_fixture">Draw Fixture</string>
+    <string name="show_fixture">Show Fixture</string>
 </resources>

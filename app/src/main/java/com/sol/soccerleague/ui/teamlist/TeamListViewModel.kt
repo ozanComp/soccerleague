@@ -6,14 +6,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sol.soccerleague.api.ApiRepositoryImpl
 import com.sol.soccerleague.api.ApiResultWrapper
+import com.sol.soccerleague.dao.CompetitionsDatabaseRepository
 import com.sol.soccerleague.model.Team
+import com.sol.soccerleague.utils.toTeamEntityList
+import com.sol.soccerleague.utils.toTeamList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class TeamListViewModel @Inject constructor(private val apiRepositoryImpl: ApiRepositoryImpl)
+class TeamListViewModel @Inject constructor(private val apiRepositoryImpl: ApiRepositoryImpl,
+                                            private val competitionsDatabaseRepository: CompetitionsDatabaseRepository)
     : ViewModel(), Observable {
 
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {}
@@ -37,18 +41,37 @@ class TeamListViewModel @Inject constructor(private val apiRepositoryImpl: ApiRe
         _isLoading.postValue(false)
     }
 
-    private val _temList = MutableLiveData<List<Team>?>()
-    val teamList: LiveData<List<Team>?>
-        get() = _temList
+    private val _hasCurrentFixture = MutableLiveData<Boolean>()
+    val hasCurrentFixture: LiveData<Boolean>
+        get() = _hasCurrentFixture
 
-    init {
-        _isLoading.postValue(false)
-        _isApiError.postValue(false)
+    private val _hasTeamFromLocal = MutableLiveData<Boolean>()
+    val hasTeamFromLocal: LiveData<Boolean>
+        get() = _hasTeamFromLocal
+
+    private val _teamList = MutableLiveData<List<Team>?>()
+    val teamList: LiveData<List<Team>?>
+        get() = _teamList
+
+    fun getAllTeamFromLocal(){
+        uiScope.launch {
+            println("try get all team from local...")
+
+            val response = competitionsDatabaseRepository.getAllTeams()
+            if(response.isNullOrEmpty()){
+                _hasTeamFromLocal.postValue(false)
+            }else{
+                _hasTeamFromLocal.postValue(true)
+                _teamList.postValue(response.toTeamList())
+            }
+        }
     }
 
     fun getAllTeams(){
         uiScope.launch {
             println("try get all teams...")
+
+            _isLoading.postValue(true)
 
             when(val response = apiRepositoryImpl.getAllTeams()){
                 is ApiResultWrapper.GenericError ->{
@@ -60,11 +83,37 @@ class TeamListViewModel @Inject constructor(private val apiRepositoryImpl: ApiRe
                     _isApiError.postValue(true)
                 }
                 is ApiResultWrapper.Success ->{
-                    println("response team count ${response.value.teams?.size}")
-                    _temList.postValue(response.value.teams)
+                    response.value.teams?.let {
+                        println("response team count ${response.value.teams.size}")
+                        competitionsDatabaseRepository.insertAllTeams(it.toTeamEntityList()) }
+                    _teamList.postValue(response.value.teams)
                 }
             }
         }
     }
 
+    fun drawFixture(){
+        uiScope.launch {
+            println("try draw fixture")
+        }
+    }
+
+    fun showFixture(){
+        uiScope.launch {
+            println("try show current fixture")
+        }
+    }
+
+    fun getCurrentFixture(){
+        uiScope.launch {
+            println("try get fixture...")
+
+            val response = competitionsDatabaseRepository.getFixtureByWeek(1)
+            if(response.isNullOrEmpty()){
+                _hasCurrentFixture.postValue(false)
+            }else{
+                _hasCurrentFixture.postValue(true)
+            }
+        }
+    }
 }
