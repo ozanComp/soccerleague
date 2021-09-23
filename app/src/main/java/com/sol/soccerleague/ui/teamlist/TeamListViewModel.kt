@@ -8,6 +8,7 @@ import com.sol.soccerleague.api.ApiRepositoryImpl
 import com.sol.soccerleague.api.ApiResultWrapper
 import com.sol.soccerleague.dao.CompetitionsDatabaseRepository
 import com.sol.soccerleague.model.Team
+import com.sol.soccerleague.utils.createFixture
 import com.sol.soccerleague.utils.toTeamEntityList
 import com.sol.soccerleague.utils.toTeamList
 import kotlinx.coroutines.CoroutineScope
@@ -95,6 +96,11 @@ class TeamListViewModel @Inject constructor(private val apiRepositoryImpl: ApiRe
     fun drawFixture(){
         uiScope.launch {
             println("try draw fixture")
+
+            val response = _teamList.value?.let { createFixture(it) }
+            if (response != null) {
+                println("fixture count ${response.size}")
+            }
         }
     }
 

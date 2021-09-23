@@ -36,6 +36,8 @@ class TeamListFragment: Fragment() {
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(TeamListViewModel::class.java)
 
+        binding.viewModel = viewModel
+
         setupRecyclerView()
 
         observe()

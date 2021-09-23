@@ -14,9 +14,8 @@ private fun shuffledList(teamList: List<Team>) : ArrayList<Team> {
 }
 
 fun createFixture(teamList: List<Team>) : ArrayList<Fixture>{
-    var listRaw = shuffledList(teamList)
+    val listRaw = shuffledList(teamList)
     val fixtureList : ArrayList<Fixture> = arrayListOf()
-    val newList  : ArrayList<Team> = arrayListOf()
     val round = teamList.size - 1
     val matchInRound = teamList.size / 2
     var idCount = 0
@@ -29,14 +28,6 @@ fun createFixture(teamList: List<Team>) : ArrayList<Fixture>{
             fixtureList.add(fixtureVariable)
             idCount++
         }
-
-        newList.add(listRaw[0])
-        newList.add(listRaw[listRaw.size-1])
-
-        for(j in 1 until listRaw.size){
-            newList.add(listRaw[j])
-        }
-        listRaw = newList
     }
     return fixtureList
 }
