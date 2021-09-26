@@ -105,6 +105,7 @@ class TeamListViewModel @Inject constructor(private val apiRepositoryImpl: ApiRe
 
             val response = _teamList.value?.let { createFixture(it) }
             if (response != null) {
+                competitionsDatabaseRepository.deleteAllFixture()
                 competitionsDatabaseRepository.insertAllFixture(response.toFixtureEntityList())
                 showFixture()
             }

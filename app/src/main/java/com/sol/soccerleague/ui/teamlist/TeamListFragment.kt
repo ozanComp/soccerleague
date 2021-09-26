@@ -69,9 +69,9 @@ class TeamListFragment: Fragment() {
     private fun observe(){
         viewModel.isLoading.observe(viewLifecycleOwner, {
             if(it)
-                progressBarNews.visibility = View.VISIBLE
+                progressBarTeamList.visibility = View.VISIBLE
             else
-                progressBarNews.visibility = View.GONE
+                progressBarTeamList.visibility = View.GONE
         })
 
         viewModel.isApiError.observe(viewLifecycleOwner, {

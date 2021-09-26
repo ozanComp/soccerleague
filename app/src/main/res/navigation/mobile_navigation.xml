@@ -13,13 +13,14 @@
 
         <action
             android:id="@+id/action_teamListFragment_to_FixtureFragment"
-            app:destination="@id/navigation_fixture"/>
+            app:destination="@id/navigation_fixture"
+            app:enterAnim="@anim/anim"/>
     </fragment>
 
     <fragment
         android:id="@+id/navigation_fixture"
-        android:name="com.sol.soccerleague.ui.fixture.FixtureFragment"
+        android:name="com.sol.soccerleague.ui.fixture.FixtureListFragment"
         android:label="@string/tittle_fixture"
-        tools:layout="@layout/fragment_fixture" >
+        tools:layout="@layout/fragment_fixturelist" >
     </fragment>
 </navigation>

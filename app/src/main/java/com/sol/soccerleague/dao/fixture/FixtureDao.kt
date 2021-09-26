@@ -12,4 +12,7 @@ interface FixtureDao {
 
     @Query("SELECT * FROM fixture where week = :week")
     suspend fun getFixtureByWeek(week : Int) : List<FixtureEntity>
+
+    @Query("DELETE FROM fixture")
+    suspend fun deleteAllFixture()
 }

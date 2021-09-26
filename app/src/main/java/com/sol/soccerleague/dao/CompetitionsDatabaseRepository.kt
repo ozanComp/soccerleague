@@ -17,6 +17,10 @@ class CompetitionsDatabaseRepository(competitionsDatabase: CompetitionsDatabase)
         return teamDao.getAllTeam()
     }
 
+    suspend fun deleteAllFixture(){
+        fixtureDao.deleteAllFixture()
+    }
+
     suspend fun insertAllFixture(list : List<FixtureEntity>){
         fixtureDao.insertAllFixture(list)
     }

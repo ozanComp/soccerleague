@@ -14,9 +14,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(TeamListViewModel::class)
     internal abstract fun bindTeamListViewModel(viewModel: TeamListViewModel): ViewModel
-
+    
     @Binds
     @IntoMap
     @ViewModelKey(FixtureViewModel::class)
-    internal abstract fun bindFixtureViewModel(viewModel: FixtureViewModel): ViewModel
+    internal abstract fun bindFixtureViewModel(pageViewModel: FixtureViewModel): ViewModel
 }
