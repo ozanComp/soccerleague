@@ -9,6 +9,7 @@ import com.sol.soccerleague.api.ApiResultWrapper
 import com.sol.soccerleague.dao.CompetitionsDatabaseRepository
 import com.sol.soccerleague.model.Team
 import com.sol.soccerleague.utils.createFixture
+import com.sol.soccerleague.utils.toFixtureEntityList
 import com.sol.soccerleague.utils.toTeamEntityList
 import com.sol.soccerleague.utils.toTeamList
 import kotlinx.coroutines.CoroutineScope
@@ -49,6 +50,11 @@ class TeamListViewModel @Inject constructor(private val apiRepositoryImpl: ApiRe
     private val _hasTeamFromLocal = MutableLiveData<Boolean>()
     val hasTeamFromLocal: LiveData<Boolean>
         get() = _hasTeamFromLocal
+
+    private val _showFixture = MutableLiveData<Boolean>()
+    val showFixture: LiveData<Boolean>
+        get() = _showFixture
+
 
     private val _teamList = MutableLiveData<List<Team>?>()
     val teamList: LiveData<List<Team>?>
@@ -99,7 +105,8 @@ class TeamListViewModel @Inject constructor(private val apiRepositoryImpl: ApiRe
 
             val response = _teamList.value?.let { createFixture(it) }
             if (response != null) {
-                println("fixture count ${response.size}")
+                competitionsDatabaseRepository.insertAllFixture(response.toFixtureEntityList())
+                showFixture()
             }
         }
     }
@@ -107,6 +114,7 @@ class TeamListViewModel @Inject constructor(private val apiRepositoryImpl: ApiRe
     fun showFixture(){
         uiScope.launch {
             println("try show current fixture")
+            _showFixture.postValue(true)
         }
     }
 

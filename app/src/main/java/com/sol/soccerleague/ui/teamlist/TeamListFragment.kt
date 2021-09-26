@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sol.soccerleague.App
@@ -67,7 +68,6 @@ class TeamListFragment: Fragment() {
 
     private fun observe(){
         viewModel.isLoading.observe(viewLifecycleOwner, {
-            println("is loading $it")
             if(it)
                 progressBarNews.visibility = View.VISIBLE
             else
@@ -75,7 +75,6 @@ class TeamListFragment: Fragment() {
         })
 
         viewModel.isApiError.observe(viewLifecycleOwner, {
-            println("is api error $it")
             if(it){
                 viewModel.doneLoading()
                 viewModel.doneApiError()
@@ -84,7 +83,6 @@ class TeamListFragment: Fragment() {
         })
 
         viewModel.hasTeamFromLocal.observe(viewLifecycleOwner, {
-            println("has team from local $it")
             if(it){
                 buttonDrawFixture.visibility = View.VISIBLE
                 viewModel.getCurrentFixture()
@@ -94,7 +92,6 @@ class TeamListFragment: Fragment() {
         })
 
         viewModel.hasCurrentFixture.observe(viewLifecycleOwner, {
-            println("has current fixture $it")
             if(it)
                 buttonShowFixture.visibility = View.VISIBLE
             else
@@ -102,13 +99,17 @@ class TeamListFragment: Fragment() {
         })
 
         viewModel.teamList.observe(viewLifecycleOwner, {
-            println("team count ${it?.size}")
-
             it?.let { it1 -> teamAdapter.update(it1) }
             viewModel.doneLoading()
 
             buttonDrawFixture.visibility = View.VISIBLE
         })
 
+        viewModel.showFixture.observe(viewLifecycleOwner, {
+            if(it){
+                val action = TeamListFragmentDirections.actionTeamListFragmentToFixtureFragment()
+                findNavController().navigate(action)
+            }
+        })
     }
 }
