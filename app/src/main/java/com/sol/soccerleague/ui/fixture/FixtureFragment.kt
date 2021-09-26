@@ -35,6 +35,8 @@ class FixtureFragment(private val week: Int) : Fragment() {
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(FixtureViewModel::class.java)
 
+        binding.week = "$week. Week"
+
         setupRecyclerView()
 
         observe()
